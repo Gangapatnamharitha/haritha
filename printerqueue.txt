@@ -1,0 +1,10 @@
+---
+- name: create Printer queue
+  hosts: all
+  become: true
+  tasks:
+          - name: printer queue
+            win_shell:  |
+                  Add-PrinterPort -name "sample3" -PrinterHostAddress "192.168.0.5"
+                  Add-PrinterDriver -Name "Microsoft Shared Fax Driver"
+                  Add-Printer -name "\\dc\sample3printer" -DriverName "Microsoft Shared Fax Driver" -PortName "sample3"
