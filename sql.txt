@@ -1,0 +1,58 @@
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 13465  bytes 679960 (664.0 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vethb8c4c92: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::6c81:53ff:fe71:d05f  prefixlen 64  scopeid 0x20<link>
+        ether 6e:81:53:71:d0:5f  txqueuelen 0  (Ethernet)
+        RX packets 1431426  bytes 123188114 (117.4 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1597787  bytes 179229486 (170.9 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+[ansible@ansible ~]$ [pgserver]
+-bash: [pgserver]: command not found
+[ansible@ansible ~]$ ipconfig\all
+-bash: ipconfigall: command not found
+[ansible@ansible ~]$ ipconfig/all
+-bash: ipconfig/all: No such file or directory
+[ansible@ansible ~]$ 13.127.121.45 ansible_ssh_private_key_file=your.pem ansible  _ssh_user=ec2-user
+-bash: 13.127.121.45: command not found
+[ansible@ansible ~]$ ansible all -i hosts -m ping
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+[ansible@ansible ~]$ 192.168.1.105 ansible_ssh_private_key_file=your.pem ansible  _ssh_user=ec2-user
+-bash: 192.168.1.105: command not found
+[ansible@ansible ~]$ vi miss.yml
+[ansible@ansible ~]$ ansible-playbook miss.yml
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+PLAY [all] *********************************************************************
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************
+
+[ansible@ansible ~]$ vi miss.yml
+---
+- hosts: all
+  become: yes
+  vars:
+    db_user: ansibledatabase
+    db_password: ansibleuser
+    db_name: ansible
+
+  tasks:
+    - name: install postgres on linux  based distros
+      yum:
+        name: "{{ item }}"
+        state: present
+        update_cache: true
+      become: true
+      loop:
+        - postgresql
+        - postgresql-server
+        - python3
+        - python3-pip
+      when: ansible_os_family == 'linux'
