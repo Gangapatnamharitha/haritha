@@ -1,0 +1,8 @@
+---
+- name: Database creation
+- hosts: All
+  become: true
+  Vars:
+    db_user: dbstudentname
+    db_roll: dbrollnumber
+    db_email: dbemail
