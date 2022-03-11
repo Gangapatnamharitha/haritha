@@ -6,3 +6,20 @@
     db_user: dbstudentname
     db_roll: dbrollnumber
     db_email: dbemail
+ tasks:
+  - name: Installing the database
+    apt: name={{ item }} update_cache=true state=latest
+    with_items:
+    - bash
+    - openssl
+    - libssl-dev
+    - libssl-doc
+  - name: Install postgre sql
+    apt: name={{ item }} update_cache=true state=present
+    with_items:
+     - postgresql
+     - postgresql-contrib
+     - libpq-dev
+     - python3-psycopg2
+  - name: checking the service is running
+    service: name=postgresql state=started enabled=yes
