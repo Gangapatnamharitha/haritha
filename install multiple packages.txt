@@ -1,0 +1,26 @@
+create new directory:
+---------------------
+mkdir ~/project -Here project is the directory name
+
+create inventory file inside the project directory:
+--------------------------------------------------
+nano ~/project/inventory.txt
+
+create the playbook inside the project directory:
+-------------------------------------------------
+nano ~/project/playbook.yml
+  
+
+
+installing multiple packages using yum:
+
+
+
+---
+- hosts: all
+  tasks:
+   - name : Install multiple packages
+     yum: name={{ item }} state=latest update_cache=true
+     loop: [git, wget, unzip, curl]
+
+ 
