@@ -1,0 +1,6 @@
+---
+- hosts: all
+ 
+  tasks:
+  - name : Install Remi package from .rpm file
+    yum: name=https://rpms.remirepo.net/enterprise/remi-release-8.rpm state=present update_cache=true
